@@ -1,8 +1,8 @@
 <template>
-<div :class= "[task.completed ? 'done' : 'undone', 'task']">
+<div @dblclick="$emit('completed',(task.id))"  :class= "[task.completed ? 'done' : 'undone', 'task']">
 
 <h3>{{task.title}} 
-<i class="fas fa-times"></i>
+<i  @click="$emit('delete', (task.id))" class="fas fa-times"></i>
 </h3>
 
 <p>{{task.Date}}</p>
@@ -14,10 +14,10 @@
 
 export default {
   name: 'Task',
-    props: {
-        task: Object,
+  props: {
+      task: Object,
     }, 
-}
+  }
 
 </script>
 
@@ -37,7 +37,7 @@ export default {
 }
 
 .undone {
-  border-left: 5px solid rgb(195, 0, 0);
+  border-left: 5px solid rgb(255, 179, 0);
 }
 
 .task h3 {

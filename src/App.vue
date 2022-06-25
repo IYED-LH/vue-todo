@@ -1,7 +1,9 @@
 <template>
 <div class="container">
 <Header/>
-<Tasks :tasks="tasks"/>
+
+<Tasks @completed="completedTask"  @delete="deleteTask" :tasks="tasks"/>
+
 </div>
 </template>
 
@@ -19,6 +21,23 @@ export default {
       tasks: []
     }
   },
+
+  methods: {
+    deleteTask(id) {
+      if (confirm('Are you sure you want to delete this task?'))
+      {
+      this.tasks = this.tasks.filter((task) => task.id !== id)
+    }
+   },
+ 
+    completedTask(id) {
+      this.tasks = this.tasks.map((task) => { (task.id === id) ?  
+        task.completed = !task.completed : ''
+        return task
+      })
+    }
+ },
+
   created() {
     this.tasks = [
       {
@@ -43,6 +62,7 @@ export default {
   },
 }
 </script>
+
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
