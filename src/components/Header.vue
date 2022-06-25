@@ -1,7 +1,7 @@
 <template>
 <header>
     <h1>Task Tracker</h1>
-    <Button text="Add Task" color="green" />
+    <Button @show-task-form="$emit('show-task-form')" :text="toggleAddTask ? 'Close' : 'Add Task'" :color="toggleAddTask ? 'rgb(231, 36, 36)' : 'green'"/>
 </header>
 </template>
 
@@ -9,6 +9,12 @@
 import Button from './Button.vue'
 export default {
     name: 'Header',
+    props: {
+        toggleAddTask: {
+            type: Boolean,
+            default: false
+        }
+    },
     components: { 
         Button 
     
@@ -22,5 +28,6 @@ header {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  
 }
 </style>

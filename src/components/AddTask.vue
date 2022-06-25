@@ -46,8 +46,7 @@ export default {
       }
     },
     methods:{
-
-        onSubmit(e) {
+         onSubmit(e) {
             e.preventDefault()
 
             if ((!this.title) || (!this.date)) {

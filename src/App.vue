@@ -1,8 +1,11 @@
 <template>
 <div class="container">
-<Header/>
 
+<Header :toggleAddTask="showAddTask" @show-task-form="showTaskForm" />
+
+<div v-show="showAddTask">
 <AddTask @add-task="addTask" />
+</div>
 
 <Tasks @completed="completedTask"  @delete="deleteTask" :tasks="tasks"/>
 
@@ -23,12 +26,17 @@ export default {
   },
   data() {
     return {
-      tasks: []
+      tasks: [],
+      showAddTask: false,
     }
   },
 
   methods: {
-    
+
+    showTaskForm() {
+      this.showAddTask = !this.showAddTask;
+    },
+
     addTask(task) {
       this.tasks.push(task)
     },
@@ -100,10 +108,10 @@ body {
   border: none;
   padding: 10px 20px;
   margin: 5px;
-  border-radius: 30px;
+  border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14px;
   font-family: inherit;
 }
 .btn:focus {
