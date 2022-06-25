@@ -5,7 +5,7 @@
 <i  @click="$emit('delete', (task.id))" class="fas fa-times"></i>
 </h3>
 
-<p>{{task.Date}}</p>
+<p>{{task.date}}</p>
 
 </div>
 </template>

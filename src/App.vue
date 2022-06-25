@@ -2,6 +2,8 @@
 <div class="container">
 <Header/>
 
+<AddTask @add-task="addTask" />
+
 <Tasks @completed="completedTask"  @delete="deleteTask" :tasks="tasks"/>
 
 </div>
@@ -10,11 +12,14 @@
 <script>
 import Header from './components/Header.vue'
 import Tasks from './components/Tasks.vue'
+import AddTask from './components/AddTask.vue'
+
 export default {
   name: 'App',
   components: {
     Header,
-    Tasks          
+    Tasks,
+    AddTask,          
   },
   data() {
     return {
@@ -23,6 +28,11 @@ export default {
   },
 
   methods: {
+    
+    addTask(task) {
+      this.tasks.push(task)
+    },
+
     deleteTask(id) {
       if (confirm('Are you sure you want to delete this task?'))
       {
@@ -43,19 +53,19 @@ export default {
       {
         id: 1,
         title: 'Task 1',
-        Date: '01/01/2020',
+        date: '01/01/2020',
         completed: true
       },
       {
         id: 2,
         title: 'Task 2',
-        Date: '01/01/2020',
+        date: '01/01/2020',
         completed: false
       },
       {
         id: 3,
         title: 'Task 3',
-        Date: '01/01/2020',
+        date: '01/01/2020',
         completed: true
       }
     ]
