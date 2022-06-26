@@ -25,6 +25,7 @@ export default {
     Tasks,
     AddTask,          
   },
+  
   data() {
     return {
       tasks: [],
@@ -40,18 +41,20 @@ export default {
     },
 
     
-
     async addTask(task) {
       const response = await axios.post ('http://localhost:5000/tasks',task); 
-      this.tasks.unshift(response.data);
+      this.tasks.push(response.data);
       },
 
-    deleteTask(id) {
+    async deleteTask(id) {
       if (confirm('Are you sure you want to delete this task?'))
       {
-      this.tasks = this.tasks.filter((task) => task.id !== id)
-    }
-   },
+      await axios.delete ('http://localhost:5000/tasks/'+id);
+      this.tasks = this.tasks.filter(task => task.id !== id);
+      }
+      
+    },
+  
  
     completedTask(id) {
       this.tasks = this.tasks.map((task) => { (task.id === id) ?  
@@ -59,17 +62,16 @@ export default {
         return task })
     },
 
-    async fetchtasks() { 
-      const response =  await fetch('http://localhost:5000/tasks')
-      const data = await response.json()
+    async fetchTasks() { 
+      const response =  await axios.get ('http://localhost:5000/tasks')
+      this.tasks = response.data
       
       return data
-
     },
     
-    async fetchtask(id) { 
-      const response =  await fetch('http://localhost:5000/tasks/'+id)
-      const data = await response.json()
+    async fetchTask(id) { 
+      const response =  await axios.get ('http://localhost:5000/tasks/'+id)
+      this.tasks = response.data
       
       return data
 
@@ -77,7 +79,7 @@ export default {
  },
 
   async created() {
-    this.tasks = await this.fetchtasks()
+    this.tasks = await this.fetchTasks()
   },
 }
 </script>

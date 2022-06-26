@@ -55,7 +55,7 @@ export default {
             }
 
             const newtask = {
-                id: Math.floor(Math.random() * 100000),
+                //id: Math.floor(Math.random() * 100000),
                 title: this.title,
                 date: this.date,
                 completed: this.completed 
