@@ -13,6 +13,7 @@
 </template>
 
 <script>
+const axios = require('axios').default;
 import Header from './components/Header.vue'
 import Tasks from './components/Tasks.vue'
 import AddTask from './components/AddTask.vue'
@@ -33,13 +34,17 @@ export default {
 
   methods: {
 
+
     showTaskForm() {
       this.showAddTask = !this.showAddTask;
     },
 
-    addTask(task) {
-      this.tasks.push(task)
-    },
+    
+
+    async addTask(task) {
+      const response = await axios.post ('http://localhost:5000/tasks',task); 
+      this.tasks.unshift(response.data);
+      },
 
     deleteTask(id) {
       if (confirm('Are you sure you want to delete this task?'))
@@ -51,32 +56,28 @@ export default {
     completedTask(id) {
       this.tasks = this.tasks.map((task) => { (task.id === id) ?  
         task.completed = !task.completed : ''
-        return task
-      })
-    }
+        return task })
+    },
+
+    async fetchtasks() { 
+      const response =  await fetch('http://localhost:5000/tasks')
+      const data = await response.json()
+      
+      return data
+
+    },
+    
+    async fetchtask(id) { 
+      const response =  await fetch('http://localhost:5000/tasks/'+id)
+      const data = await response.json()
+      
+      return data
+
+    } ,
  },
 
-  created() {
-    this.tasks = [
-      {
-        id: 1,
-        title: 'Task 1',
-        date: '01/01/2020',
-        completed: true
-      },
-      {
-        id: 2,
-        title: 'Task 2',
-        date: '01/01/2020',
-        completed: false
-      },
-      {
-        id: 3,
-        title: 'Task 3',
-        date: '01/01/2020',
-        completed: true
-      }
-    ]
+  async created() {
+    this.tasks = await this.fetchtasks()
   },
 }
 </script>
@@ -103,6 +104,7 @@ body {
 }
 .btn {
   display: inline-block;
+  width: 25%;
   background: #000;
   color: #fff;
   border: none;
