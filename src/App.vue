@@ -56,23 +56,29 @@ export default {
     },
   
  
-    completedTask(id) {
-      this.tasks = this.tasks.map((task) => { (task.id === id) ?  
-        task.completed = !task.completed : ''
-        return task })
+   async completedTask(id) {
+      
+      const taskToToggle = await this.fetchTask(id)
+      const updTask = { ...taskToToggle, completed: !taskToToggle.completed }
+      const response = await axios.put (`http://localhost:5000/tasks/${id}`, updTask);
+      
+      const data = response.data;
+      this.tasks = this.tasks.map((task) =>
+        task.id === id ? { ...task, completed: data.completed } : task
+      )
     },
 
     async fetchTasks() { 
-      const response =  await axios.get ('http://localhost:5000/tasks')
-      this.tasks = response.data
       
+      const response =  await axios.get ('http://localhost:5000/tasks/')
+      const data = response.data;
+
       return data
     },
     
     async fetchTask(id) { 
       const response =  await axios.get ('http://localhost:5000/tasks/'+id)
-      this.tasks = response.data
-      
+      const data = response.data;
       return data
 
     } ,
