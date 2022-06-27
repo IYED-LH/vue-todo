@@ -54,15 +54,14 @@ export default {
       }
       
     },
-  
- 
+    
    async completedTask(id) {
       
       const taskToToggle = await this.fetchTask(id)
       const updTask = { ...taskToToggle, completed: !taskToToggle.completed }
       const response = await axios.put (`http://localhost:5000/tasks/${id}`, updTask);
       
-      const data = response.data;
+      const data = await response.data;
       this.tasks = this.tasks.map((task) =>
         task.id === id ? { ...task, completed: data.completed } : task
       )
@@ -71,14 +70,14 @@ export default {
     async fetchTasks() { 
       
       const response =  await axios.get ('http://localhost:5000/tasks/')
-      const data = response.data;
+      const data = await response.data;
 
       return data
     },
     
     async fetchTask(id) { 
       const response =  await axios.get ('http://localhost:5000/tasks/'+id)
-      const data = response.data;
+      const data = await response.data;
       return data
 
     } ,
