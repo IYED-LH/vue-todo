@@ -9,12 +9,16 @@
 
 <Tasks @completed="completedTask"  @delete="deleteTask" :tasks="tasks"/>
 
+<Footer/>
+
 </div>
 </template>
 
 <script>
 const axios = require('axios').default;
+
 import Header from './components/Header.vue'
+import Footer from './components/Footer.vue'
 import Tasks from './components/Tasks.vue'
 import AddTask from './components/AddTask.vue'
 
@@ -23,7 +27,9 @@ export default {
   components: {
     Header,
     Tasks,
-    AddTask,          
+    AddTask, 
+    Footer,
+             
   },
   
   data() {
@@ -77,6 +83,7 @@ export default {
     
     async fetchTask(id) { 
       const response =  await axios.get ('http://localhost:5000/tasks/'+id)
+      
       const data = await response.data;
       return data
 
@@ -104,7 +111,7 @@ body {
   max-width: 500px;
   margin: 30px auto;
   overflow: auto;
-  min-height: 300px;
+  min-height: 100px;
   border: 1px solid steelblue;
   padding: 30px;
   border-radius: 5px;

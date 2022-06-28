@@ -5,7 +5,7 @@
 <i  @click="$emit('delete', (task.id))" class="fas fa-times"></i>
 </h3>
 
-<p>{{task.date}}</p>
+<p>{{task.date}} </p>
 
 </div>
 </template>
@@ -46,4 +46,9 @@ export default {
   justify-content: space-between;
   }
 
+ p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  }
 </style>
